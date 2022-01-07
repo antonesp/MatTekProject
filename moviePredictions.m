@@ -4,11 +4,16 @@ function predictedScore = moviePredictions(movieRatings,predictionType)
 %Dato 07-01-2022 af Anton og Clara
 %size andgiver matrixens længde og bredde som en vektor A x B
 
+%Starter med at tjekke for gyldigt input
+if (ischar(movieRatings))
+    disp('Fejl ikke gyldigt input');
+else
+
+
 mBL = size(movieRatings);
 
 mL = mBL(1);
 mB = mBL(2);
-
 %Vi opstiller 2 tomme vektorer som vi kan putte simularitet ind i senere
 simVekP = [];
 simVekE = [];
@@ -19,13 +24,11 @@ for i =1:mL
     v1 = movieRatings(i,:);
     
     for j = 1:mL
-       
-        v2 = movieRatings(j,:);  
-    
+   
+        v2 = movieRatings(j,:);
         
         simVekP(end+1) = pearsonSimilarity(v1,v2);
         simVekE(end+1) = euclSimilarity(v1,v2);
-        
     end
      
 end
@@ -36,12 +39,16 @@ end
 simMatP = reshape(simVekP,mL,mL);
 simMatE = reshape(simVekE,mL,mL);
 
+
 %if bruges til at bestemme hvilken type simularitet skal bruges.
 if predictionType == 1
     predictedScore = predictAverage(mB,mL,simMatP,movieRatings);
-    
+    disp('Matrix for pearson simularitet')
+       
 else
     predictedScore = predictAverage(mB,mL,simMatE,movieRatings);
+    disp('Matrix for euklidisk simularitet')
+    
 end
 
 %Til sidst finder vi filmen med den højeste forudsigelse til hver bruger.
@@ -52,8 +59,3 @@ for i =1:mL
    
 end
 end
-
-
-
-            
-
