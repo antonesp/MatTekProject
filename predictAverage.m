@@ -1,7 +1,9 @@
+function predAv = predictAverage(bredde,lende,simMatrix,filmMatrix)
 
-function predAv = predictAverage(bredde,simMatrix,filmMatrix)
+sSimMatrix = sort(simMatrix,2,'descend');
 
-sSimMatrix = sort(simMatrix,'descend');
+predAv = zeros(bredde,lende);
+
 for i = 1:bredde
     vekS = sSimMatrix(i,:);
     vek = simMatrix(i,:);
@@ -12,9 +14,13 @@ for i = 1:bredde
     
     samRat = filmMatrix(position(1),:)+filmMatrix(position(2),:)+filmMatrix(position(3),:);
     
-    predAvVek(end+1) = samRat/3;
+    ratVek = samRat/3;
+    
+    predAv(i,:) = ratVek;
+    
+    
+    
+    
+end
    
-    
-    
-  
 end
